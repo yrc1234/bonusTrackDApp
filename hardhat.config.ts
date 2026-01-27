@@ -1,6 +1,10 @@
 import type { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox-viem";
+import "@nomicfoundation/hardhat-ethers";
+import "@nomicfoundation/hardhat-chai-matchers";
+import "@nomicfoundation/hardhat-verify";
 import "@openzeppelin/hardhat-upgrades";
+import hardhatTypechain from "@nomicfoundation/hardhat-typechain";
+
 import dotenv from 'dotenv';
 dotenv.config();
 const config: HardhatUserConfig = {
@@ -12,7 +16,13 @@ const config: HardhatUserConfig = {
     }
   },
   etherscan: {
-      apiKey: process.env.ETHERSCAN_KEY
-    }
+      apiKey: {
+        sepolia: process.env.ETHERSCAN_KEY,
+        optimisticSepolia: process.env.ETHERSCAN_KEY  // OP Sepolia uses same Etherscan API key
+      }
+  },
+  sourcify: {
+    enabled: true
+  }
 };
 export default config;
